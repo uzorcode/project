@@ -1,0 +1,31 @@
+body {
+    margin: 0%;
+    padding: 0%;
+}
+
+a,
+a:hover {
+    text-decoration: none;
+    color: black;
+}
+
+ul,
+ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+aside {
+    flex-basis: 15%;
+    background-color: #cccccc;
+    /*    height: 30vh;*/
+    border-right: 1px solid #bbbbbb;
+    position: relative;
+}
+
+
+#aside1 {
+    border-left: 1px solid #bbbbbb;
+    background-color: aqua;
+}
