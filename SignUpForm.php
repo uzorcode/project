@@ -1,3 +1,50 @@
+<?php
+require 'db_query/InsertQuery.php'; 
+$firstnameErr = ""; $lastnameErr = ""; $emailErr =""; $usernameErr = "";
+
+function sanitizeInputs($value) {
+    $value = trim($value);
+    $value = htmlentities($value);
+    $value = htmlspecialchars($value);
+    $value = stripslashes($value);
+
+    return $value;
+}
+
+$title = "";
+$firstname = "";
+$lastname = "";
+$email = "";
+$username = "";
+$password = "";
+
+if (isset($_POST['btnsubmit'])) {
+//    $firstname = sanitizeInputs($_POST['firstname']);
+//    $lastname = sanitizeInputs($_POST['lastname']);
+//    $email = sanitizeInputs($_POST['email']);
+//    $username = sanitizeInputs($_POST['username']);
+//    $pword = password_hash($_POST['password'], PASSWORD_DEFAULT);
+
+    if (empty($firstname)){
+        $firstnameErr = "First Name is empty";
+    }
+//   elseif (strlen($firstname) < 2){
+//  $firstnameErr = "First Name should not be less than two characters";
+// }
+  if (empty($lastname)){
+    $lastnameErr = "Last Name is empty";
+  }
+
+  if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
+    $emailErr = "Invalid Email address";
+  }
+
+  if (empty($username)){
+    $usernameErr = "Username is empty";
+  }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -35,6 +82,9 @@
 
 
             </ul>
+            <?php
+	if (!isset($_POST['btnsubmit']) or (isset($_POST['btnsubmit']) and (!empty($firstnameErr) or !empty($lastnameErr) or !empty($emailErr) or !empty($usernameErr)))) {
+	?>
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
@@ -74,29 +124,29 @@
                                         <option>--Select--</option>
                                         <option>--Dr.--</option>
                                         <option>--Nurse--</option>
-                                        <option>--Lab Scientist--</option>
+                                        <option>--Laboratory Scientist--</option>
                                     </select>
-                                </div>
+                                </div><br>
                                 <div class="">
                                     <label><b>First Name :</b></label><br>
                                     <input type="text" name="Rfirstname" required><br>
-                                </div>
+                                </div><br>
                                 <div class="">
                                     <label><b>Last Name :</b></label><br>
                                     <input type="text" name="Rlastname" required><br>
-                                </div>
+                                </div><br>
                                 <div class="">
                                     <label class="ml-4"><b>Email :</b></label><br>
                                     <input type="email" name="Remail" required><br>
-                                </div>
+                                </div><br>
                                 <div class="">
                                     <label><b>Username :</b></label><br>
                                     <input type="text" name="Runame" required><br>
-                                </div>
+                                </div><br>
                                 <div class="">
                                     <label><b>Password :</b></label><br>
                                     <input type="password" name="Rpword" required><br>
-                                </div>
+                                </div><br>
                                 <!-- <div class="mb-3" class="ml-0">
                                     <label class="mr-auto"><b>Confirm Password :</b></label>
                                     <input type="password" class="ml-0" name="">
@@ -105,9 +155,25 @@
                                     <input type="checkbox" required> <label>I agree to the<a href="" style="color:blue"> Terms of Use </a> and <a href="" style="color:blue"> Privacy Policy</a>.</label>
                                 </div>
                                 <div align="center" class="mt-3 mb-3">
-                                    <a class="btn-lg" style="background-color:#C9DAE4" href="" name="btnsubmit">Submit</a>
+                                    <button class="btn-lg" style="background-color:#9FBBD0" name="btnsubmit">Submit</button>
                                 </div>
                             </form>
+                            <?php
+}
+else {
+	?>
+                            <div>
+                                <h2>Acknowledgement Receipt</h2>
+                                <div>Title: <?=$_POST['title']?></div>
+                                <div>First Name: <?=$_POST['firstname']?></div>
+                                <div>Last Name: <?=$_POST['lastname']?></div>
+                                <div>Email: <?=$_POST['email']?></div>
+
+                            </div>
+                            <?php
+}
+ 
+?>
                             <div>Already have an account? Click <a href="Login.html" style="color:blue">here</a> to login </div>
                         </div>
                     </div>
@@ -117,8 +183,8 @@
 
     </section>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </body>
 
 </html>
